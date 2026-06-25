@@ -31,6 +31,18 @@ model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']
 earlystop = EarlyStopping(monitor='val_loss',patience=5,restore_best_weights=True)
 
 
-model.fit(X_train,y_train,epochs=5,batch_size=32,validation_split=.2,callbacks=[earlystop])
+#model.fit(X_train,y_train,epochs=5,batch_size=32,validation_split=.2,callbacks=[earlystop])
 
-model.save('simple_rnn_imdb.h5')
+#model.save('simple_rnn_imdb.h5')
+import streamlit as st
+import tensorflow as tf
+
+@st.cache_resource  # This ensures the model is loaded only once
+def load_model():
+    return tf.keras.models.load_model('my_sentiment_model.h5')
+
+model = load_model()
+
+# Now use 'model' for predictions
+# user_input = st.text_input("Enter a review")
+# prediction = model.predict(...)
